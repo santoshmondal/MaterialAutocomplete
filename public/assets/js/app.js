@@ -18,15 +18,11 @@ app.controller("first", ['$scope', '$timeout', '$q', '$log', function($scope, $t
 
 
     $scope.querySearch = function(query) {
-        var results = (query != '') ? $scope.createFilterFor(query) : $scope.states,
-            deferred;
-        if ($scope.simulateQuery) {
-            deferred = $q.defer();
-            $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
-            return deferred.promise;
-        } else {
-            return results;
-        }
+        var deferred = $q.defer();
+        var results = (query != '') ? $scope.createFilterFor(query) : $scope.states;
+
+        $timeout(function(){ deferred.resolve( results );}, Math.random() * 1000, false);
+        return deferred.promise;
     };
 
 
