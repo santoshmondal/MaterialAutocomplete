@@ -14,15 +14,11 @@ app.controller("first", ['$scope', '$timeout', '$q', '$log', function($scope, $t
         {'value':'Delaware', 'display':'Delaware'}, {'value':'Florida', 'display':'Florida'}, {'value':'Georgia', 'display':'Georgia'}, {'value':'Hawaii', 'display':'Hawaii'},
         {'value':'Idaho', 'display':'Idaho'}, {'value':'Illinois', 'display':'Illinois'}, {'value':'Indiana', 'display':'Indiana'}, {'value':'Iowa', 'display':'Iowa'}];
 
-    $scope.states = function() {
+    $scope.states = allStates;
 
-        return $scope.states = allStates;
-
-    };
 
     $scope.querySearch = function(query) {
-        // $scope.states = allStates;
-        var results = query ? $scope.createFilterFor(query) : $scope.states,
+        var results = (query != '') ? $scope.createFilterFor(query) : $scope.states,
             deferred;
         if ($scope.simulateQuery) {
             deferred = $q.defer();
@@ -35,7 +31,6 @@ app.controller("first", ['$scope', '$timeout', '$q', '$log', function($scope, $t
 
     $scope.selectedItemChange = function(item) {
         $log.info('Item changed to ' + JSON.stringify(item));
-        $scope.states = allStates;
     };
 
     $scope.searchTextChange   = function(text) {
@@ -56,7 +51,7 @@ app.controller("first", ['$scope', '$timeout', '$q', '$log', function($scope, $t
         });
 
 
-        return $scope.states = newStates;
+        return  newStates;
     };
 }]);
 
