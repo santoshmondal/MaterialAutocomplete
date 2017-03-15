@@ -17,25 +17,23 @@ app.controller("first", ['$scope', '$timeout', '$q', '$log', function($scope, $t
 
 
     $scope.querySearch = function(query) {
-        var deferred = $q.defer();
-        var results = (query != '') ? $scope.createFilterFor(query) : $scope.states;
+        return new Promise(function(resolve, reject){
+            var results = [];
 
-        $timeout(function(){ deferred.resolve( results );}, Math.random() * 1000, false);
-        return deferred.promise;
-    };
+            if(query != '') {
+                var lowercaseQuery = angular.lowercase(query);
 
-
-    $scope.createFilterFor = function(query) {
-        var lowercaseQuery = angular.lowercase(query);
-
-        var newStates = allStates.filter(function(elem, index){
-            if(elem.value.toLowerCase().indexOf(lowercaseQuery) != -1) {
-                return elem;
+                results = allStates.filter(function(elem, index){
+                    if(elem.value.toLowerCase().indexOf(lowercaseQuery) != -1) {
+                        return elem;
+                    }
+                });
+            } else {
+                results = allStates;
             }
+
+            $timeout(function(){ resolve( results );}, Math.random() * 500, false);
         });
-
-
-        return  newStates;
     };
 }]);
 
