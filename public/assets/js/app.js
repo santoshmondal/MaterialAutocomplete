@@ -9,25 +9,20 @@ app.controller("first", ['$scope', '$timeout', '$q', '$log', function($scope, $t
     $scope.simulateQuery = false;
     $scope.isDisabled    = false;
 
-    $scope.states = function() {
-        var allStates = 'Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware,\
-              Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana,\
-              Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana,\
-              Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina,\
-              North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina,\
-              South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia,\
-              Wisconsin, Wyoming';
+    var allStates = [{'value':'Alabama', 'display':'Alabama'}, {'value':'Alaska', 'display':'Alaska'}, {'value':'California', 'display':'California'},
+        {'value':'Arizona', 'display':'Arizona'}, {'value':'Arkansas', 'display':'Arkansas'}, {'value':'Colorado', 'display':'Colorado'}, {'value':'Connecticut', 'display':'Connecticut'},
+        {'value':'Delaware', 'display':'Delaware'}, {'value':'Florida', 'display':'Florida'}, {'value':'Georgia', 'display':'Georgia'}, {'value':'Hawaii', 'display':'Hawaii'},
+        {'value':'Idaho', 'display':'Idaho'}, {'value':'Illinois', 'display':'Illinois'}, {'value':'Indiana', 'display':'Indiana'}, {'value':'Iowa', 'display':'Iowa'}];
 
-        return allStates.split(/, +/g).map( function (state) {
-            return {
-                value: state.toLowerCase(),
-                display: state
-            };
-        });
+    $scope.states = function() {
+
+        return $scope.states = allStates;
+
     };
 
     $scope.querySearch = function(query) {
-        var results = query ? $scope.states.filter($scope.createFilterFor(query) ) : $scope.states,
+        // $scope.states = allStates;
+        var results = query ? $scope.createFilterFor(query) : $scope.states,
             deferred;
         if ($scope.simulateQuery) {
             deferred = $q.defer();
@@ -40,6 +35,7 @@ app.controller("first", ['$scope', '$timeout', '$q', '$log', function($scope, $t
 
     $scope.selectedItemChange = function(item) {
         $log.info('Item changed to ' + JSON.stringify(item));
+        $scope.states = allStates;
     };
 
     $scope.searchTextChange   = function(text) {
@@ -53,9 +49,14 @@ app.controller("first", ['$scope', '$timeout', '$q', '$log', function($scope, $t
     $scope.createFilterFor = function(query) {
         var lowercaseQuery = angular.lowercase(query);
 
-        return function filterFn(state) {
-            return (state.value.indexOf(lowercaseQuery) === 0);
-        };
+        var newStates = allStates.filter(function(elem, index){
+            if(elem.value.toLowerCase().indexOf(lowercaseQuery) != -1) {
+                return elem;
+            }
+        });
+
+
+        return $scope.states = newStates;
     };
 }]);
 
