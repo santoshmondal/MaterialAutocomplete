@@ -29,17 +29,6 @@ app.controller("first", ['$scope', '$timeout', '$q', '$log', function($scope, $t
         }
     };
 
-    $scope.selectedItemChange = function(item) {
-        $log.info('Item changed to ' + JSON.stringify(item));
-    };
-
-    $scope.searchTextChange   = function(text) {
-        $log.info('Text changed to ' + text);
-    };
-
-    $scope.newState = function(state) {
-        alert("Sorry! You'll need to create a Constitution for " + state + " first!");
-    };
 
     $scope.createFilterFor = function(query) {
         var lowercaseQuery = angular.lowercase(query);
