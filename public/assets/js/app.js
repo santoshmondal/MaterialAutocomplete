@@ -6,7 +6,6 @@ var app = angular.module("app", ['ngMaterial']);
 app.controller("first", ['$scope', '$timeout', '$q', '$log', function($scope, $timeout, $q, $log){
 
 
-    $scope.simulateQuery = false;
     $scope.isDisabled    = false;
 
     var allStates = [{'value':'Alabama', 'display':'Alabama'}, {'value':'Alaska', 'display':'Alaska'}, {'value':'California', 'display':'California'},
